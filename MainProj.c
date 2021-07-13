@@ -14,15 +14,59 @@ long tot_pp[];
 int t_p[];
 int a = 0;
 main();
-
-typedef struct 
+void ConvertLineToString( int lne)
 {
-    int SrNo;
-    char Destination[200];
-    int PricePerDay;
-    char Discription[100000];
-} record_t;
+    int end, loop, line= lne;
+    char str[512];
+    FILE *fd = fopen("NA.csv", "r");
+    if (fd == NULL) {
+        printf("Failed to open file\n");
+        return -1;
+    }
+    for(end = loop = 0;loop<line+1;++loop){ 
+        if(0==fgets(str, sizeof(str), fd)){//include '\n'
+            end = 1;//can't input (EOF)
+            break;
+        }
+    }
+    if(!end)
+        printf("\nLine-%d: %s\n", line, str);
+    fclose(fd);
+}
+void OpenAndReadFile(char* Filename)
+{
+    FILE *fp = NULL;
+	char *line,*record;
+	char buffer[512];
+	if ((fp = fopen( Filename, "at+")) != NULL)
+	{
+		char delims[] = ",";
+		char *result = NULL;
+		int j = 0;
+        int i = 0 ; 
+		 while ((line = fgets(buffer, sizeof(buffer), fp))!=NULL)//The loop continues when the end of the file is not read
+		{
+            
 
+			record = strtok(line, ",");
+			 while (record != NULL)//Read the data of each row
+			{
+				 if (strcmp(record, "Ps:") == 0)//When reading the Ps line, do not continue reading
+					return 0;
+				 printf("%s ", record);//Print out every data read
+				 if (j == 20) //Just read the first 13 columns
+					break;
+				record = strtok(NULL, ",");            
+				j++;
+			}
+			printf("\n"); 
+			j = 0;
+ 
+		}
+		fclose(fp);
+		fp = NULL;
+	}
+}
 int DataInput()
 {
     
@@ -71,39 +115,10 @@ int printRandoms(int lower, int upper,  int count)
 int DestinationChoose()
 {
      
-FILE *fp = NULL;
-	char *line,*record;
-	char buffer[512];
-	if ((fp = fopen("DataPlace.csv", "at+")) != NULL)
-	{
-		char delims[] = ",";
-		char *result = NULL;
-		int j = 0;
-		 while ((line = fgets(buffer, sizeof(buffer), fp))!=NULL)//The loop continues when the end of the file is not read
-		{
-			record = strtok(line, ",");
-			 while (record != NULL)//Read the data of each row
-			{
-				 if (strcmp(record, "Ps:") == 0)//When reading the Ps line, do not continue reading
-					return 0;
-				 printf("%s ", record);//Print out every data read
-				 if (j == 14) //Just read the first 13 columns
-					break;
-				record = strtok(NULL, ",");
-				j++;
-			}
-			printf("\n"); 
-			j = 0;
- 
-		}
-		fclose(fp);
-		fp = NULL;
-	}
-
-    
 
 
-   /* int NA = 75000;
+
+    int NA = 75000;
     int AS = 30000;
     int EU = 55000;
     int AU = 85000;
@@ -119,7 +134,7 @@ FILE *fp = NULL;
     switch (choose)
     {
     case 1:
-        
+        OpenAndReadFile("NA.csv");
     break;
     case 2:
         ;
@@ -134,7 +149,7 @@ FILE *fp = NULL;
         printf("Please Enter a Valid Option\n");
         DestinationChoose();
     break;
-    }*/
+    }
     
 }
 void BookCT()
@@ -260,7 +275,6 @@ void menu()
 int main()
     {   
     menu();
-
     return 0;
     }
 
