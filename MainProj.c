@@ -13,13 +13,15 @@ int no_ppl[];
 long tot_pp[];
 int t_p[];
 int a = 0;
-main();
-void ConvertLineToString( int lne)
+int LineChoose_t;
+
+char ConvertLineToString(int lne)
 {
     int end, loop, line= lne;
-    char str[512];
+    char str[1024];
     FILE *fd = fopen("NA.csv", "r");
-    if (fd == NULL) {
+    if (fd == NULL) 
+    {
         printf("Failed to open file\n");
         return -1;
     }
@@ -30,14 +32,14 @@ void ConvertLineToString( int lne)
         }
     }
     if(!end)
-        printf("\nLine-%d: %s\n", line, str);
+        printf("\nLine-%d: %s\n", line, str); return str;
     fclose(fd);
 }
 void OpenAndReadFile(char* Filename)
 {
     FILE *fp = NULL;
 	char *line,*record;
-	char buffer[512];
+	char buffer[1024];
 	if ((fp = fopen( Filename, "at+")) != NULL)
 	{
 		char delims[] = ",";
@@ -54,7 +56,7 @@ void OpenAndReadFile(char* Filename)
 				 if (strcmp(record, "Ps:") == 0)//When reading the Ps line, do not continue reading
 					return 0;
 				 printf("%s ", record);//Print out every data read
-				 if (j == 20) //Just read the first 13 columns
+				 if (j == 25) //Just read the first 13 columns
 					break;
 				record = strtok(NULL, ",");            
 				j++;
@@ -114,7 +116,7 @@ int printRandoms(int lower, int upper,  int count)
 }      
 int DestinationChoose()
 {
-     
+    int lineChoose ;
 
 
 
@@ -135,11 +137,21 @@ int DestinationChoose()
     {
     case 1:
         OpenAndReadFile("NA.csv");
+        printf("\n  Enter the Place you want to travel to ");
+        scanf("%d",lineChoose);
+        LineChoose_t = lineChoose;
     break;
     case 2:
-        ;
+        OpenAndReadFile("d1asia.csv");
+        printf("\n Enter the Place you want to travel to ");
+        scanf("%d",lineChoose);
+        LineChoose_t = lineChoose;
     break; 
     case 3:
+        OpenAndReadFile("d1euro.csv");
+        printf("\n  Enter the Place you want to travel to ");
+        scanf("%d",lineChoose);
+        LineChoose_t = lineChoose;
       
     break;
     case 4: 
@@ -150,8 +162,11 @@ int DestinationChoose()
         DestinationChoose();
     break;
     }
-    
 }
+void xd()
+{
+    printf(ConvertLineToString(2));
+}   
 void BookCT()
 { 
     char per_name[20];int per_age;
@@ -264,6 +279,7 @@ void menu()
     {
         DataInput();  
         DestinationChoose();
+        xd();
         break;
     }
     
@@ -272,9 +288,11 @@ void menu()
     
    
 }
+
 int main()
     {   
     menu();
+    xd();
     return 0;
     }
 
