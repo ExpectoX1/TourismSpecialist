@@ -3,38 +3,17 @@
 #include<string.h>
 #define NUMLETTERS 100
 // Variables
-char name[100];
-int age[100];
-int codes[100];
-char destin[100];
-long price[100];
-int no_days[];
-int no_ppl[];
-long tot_pp[];
-int t_p[];
-int a = 0;
 int LineChoose_t;
+char Str[1024];
+char *array[10];
 
-char ConvertLineToString(int lne)
-{
-    int end, loop, line= lne;
-    char str[1024];
-    FILE *fd = fopen("NA.csv", "r");
-    if (fd == NULL) 
-    {
-        printf("Failed to open file\n");
-        return -1;
-    }
-    for(end = loop = 0;loop<line+1;++loop){ 
-        if(0==fgets(str, sizeof(str), fd)){//include '\n'
-            end = 1;//can't input (EOF)
-            break;
-        }
-    }
-    if(!end)
-        printf("\nLine-%d: %s\n", line, str); return str;
-    fclose(fd);
-}
+char PlaceChosen[1000];
+int PricePerDayChosen;
+
+char CustName[100];
+int Age;
+
+
 void OpenAndReadFile(char* Filename)
 {
     FILE *fp = NULL;
@@ -56,7 +35,7 @@ void OpenAndReadFile(char* Filename)
 				 if (strcmp(record, "Ps:") == 0)//When reading the Ps line, do not continue reading
 					return 0;
 				 printf("%s ", record);//Print out every data read
-				 if (j == 25) //Just read the first 13 columns
+				 if (j == 25) //Just read the first 25 columns
 					break;
 				record = strtok(NULL, ",");            
 				j++;
@@ -69,12 +48,11 @@ void OpenAndReadFile(char* Filename)
 		fp = NULL;
 	}
 }
-int DataInput()
+int DataPrint()
 {
     
    FILE* fp = fopen("DataStore.csv", "a+");
-    char CustName[100];
-    int Age; 
+     
     char Gender;
   
   
@@ -85,19 +63,8 @@ int DataInput()
         printf("Can't open file\n");
         return 1;
     }
-  
-    // Asking user input for the
-    // new record to be added
-    printf("\nEnter Your Name\n");
-    scanf("%s", &CustName);
-    //printf("\nEnter Available Amount\n");
-    //scanf("%s", &Gender);
-    printf("\nEnter Your Age\n");
-    scanf("%d", &Age);
-    
-  
     // Saving data in file
-    fprintf(fp, "%s, %d\n", CustName,Age);
+    fprintf(fp, "%s, %d , %s, %d\n", CustName,Age,PlaceChosen,PricePerDayChosen);
   
     printf("\nNew Account added to record \n");
   
@@ -113,7 +80,23 @@ int printRandoms(int lower, int upper,  int count)
            (upper - lower + 1)) + lower;
         return num;
     }
-}      
+}    
+void GetElementsFromString()
+{ 
+    int i=0;
+
+    array[i] = strtok(Str,",");
+
+    while(array[i]!=NULL)
+{
+   array[++i] = strtok(NULL,",");
+}
+    strcpy(PlaceChosen,array[1]);
+    //printf("%s",array[1]);
+    printf("%s",PlaceChosen);
+    PricePerDayChosen = atoi(array[2]);
+    printf("%d", PricePerDayChosen);
+}  
 int DestinationChoose()
 {
     int lineChoose ;
@@ -138,23 +121,31 @@ int DestinationChoose()
     case 1:
         OpenAndReadFile("NA.csv");
         printf("\n  Enter the Place you want to travel to ");
-        scanf("%d",lineChoose);
+        scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
+        ConvertLineToString("NA.csv",LineChoose_t);
     break;
     case 2:
         OpenAndReadFile("d1asia.csv");
         printf("\n Enter the Place you want to travel to ");
-        scanf("%d",lineChoose);
+        scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
+        ConvertLineToString("d1asia.csv",LineChoose_t);
     break; 
     case 3:
         OpenAndReadFile("d1euro.csv");
         printf("\n  Enter the Place you want to travel to ");
-        scanf("%d",lineChoose);
+        scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
+        ConvertLineToString("d1euro.csv",LineChoose_t);
       
     break;
     case 4: 
+        OpenAndReadFile("d1aus.csv");
+        printf("\n  Enter the Place you want to travel to ");
+        scanf("%d",&lineChoose);
+        LineChoose_t = lineChoose;
+        ConvertLineToString("d1aus.csv",LineChoose_t);
         
     break;
     default:
@@ -163,99 +154,35 @@ int DestinationChoose()
     break;
     }
 }
-void xd()
+void ConvertLineToString(char *FLEN ,int lne)
 {
-    printf(ConvertLineToString(2));
-}   
-void BookCT()
-{ 
-    char per_name[20];int per_age;
-    age[a]=per_age;
-        
-        
-        
-    
-    for(int i=0;i<50;i++)// change i for new no. of destinations
-    {
-        printf("%d, %s , %ld\n",i+1, destin[i], price[i]);
-    }
-    int place;
-    printf("Enter the place Sr No where you want to go to.\n");
-    scanf("%d",&place);
-    place-=1;
-    t_p[a] = place;
-    int ndays; 
-    printf("Enter Number of Days.\n");
-    scanf("%d",&ndays);
-    no_days[a]=ndays;
-    int nppl;
-    printf("Enter Number of People.\n");
-    scanf("%d",&nppl);
-    no_ppl[a]=nppl;
-
-    //price calc
-    long t_price= price[a]*no_ppl[a]*no_days[a];
-    tot_pp[a]=t_price;
-    printf("Your total billed amt is:%ld\n",t_price);
-    int code = printRandoms(1000,9999,1000);//x
-    printf("Your code is - %d\n",code);
-    printf("Don't Forget it\n");
-    codes[a] = code ; 
-    //printf("y or n\n");
-    //char opt; scanf("%c",&opt);
-    //if(opt=="y")
-    //{   name[a]=per_name;
-    //    age[a]=per_age;
-    //    no_days[a]=ndays;
-    //    no_ppl[a]=nppl;
-    //    tot_pp[a]=t_price;
-
-    //    printf("Your booking has been confirmed\n");
-    //}
-    //else
+    char str[1024];
+    int end, loop, line= lne;
+    FILE *fd = fopen( FLEN, "r");
+    //if (fd == NULL) 
     //{
-    //    printf("Your booking has been cancelled\n");
+        //printf("Failed to open file\n");
+        //return -1;
     //}
-    
-
-    
-    //book
-    //call menu()
-    a++;
-    t_price=0;
-    
-
+    for(end = loop = 0;loop<line+1;++loop){ 
+        if(0==fgets(str, sizeof(str), fd)){//include '\n'
+            end = 1;//can't input (EOF)
+            break;
+        }
+    }
+    if(!end)
+    {
+        strcpy(Str,str);
+    }
+    fclose(fd);
 }
-void View ()
+void StoringString()
 {
-    a=0;
-    int t = 0 ;
-    printf("Enter the Code\n");
-    scanf("%d",&t );
-    for(int i =0 ; i<100 ; i++)
-    {
-    if(t == codes[i])
-    {
-        printf("Name:%s\n", name[a]);
-        printf("Age:%d\n", age[a]);
-        printf("Destination:%s\n",destin[t_p[a]]);
-        printf("Number of ppl: %d\n",tot_pp[a]);
-        printf("Number of Days:%d\n",no_days[a]);
-
-    }
-    else
-    {
-        printf("Enter a Valid Code");
-    }
-    }
     
+    printf("%s",Str);
+    GetElementsFromString();
 
-
-
-
-
-
-}
+}   
 void Exit()
 {
     exit(0);
@@ -270,16 +197,25 @@ void menu()
     printf("3. View Tickets(Under Constructon)\n");
     printf("4. Cancel Tickeit(Under Construction)\n");
     printf("5. Exit Program\n");
-    printf("6. Manager Portal ");
+    printf("6. Manager Portal\n ");
     scanf("%d",&choice);
 
     switch (choice)
     {
     case 1:
-    {
-        DataInput();  
+    {  
+        // Asking user input for the
+        // new record to be added
+        printf("\nEnter Your Name\n");
+        scanf("%s", &CustName);
+        //printf("\nEnter Available Amount\n");
+        //scanf("%s", &Gender);
+        printf("\nEnter Your Age\n");
+        scanf("%d", &Age);
         DestinationChoose();
-        xd();
+        StoringString();
+        DataPrint();
+
         break;
     }
     
@@ -288,11 +224,9 @@ void menu()
     
    
 }
-
 int main()
     {   
     menu();
-    xd();
     return 0;
     }
 
