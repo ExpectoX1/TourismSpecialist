@@ -1,16 +1,22 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include <math.h>
 #define NUMLETTERS 100
 // Variables
 int LineChoose_t;
 char Str[1024];
 char *array[10];
 
+char CustName[100];
 char PlaceChosen[1000];
 int PricePerDayChosen;
+int TotalPrice;
+int NoOfPpl;
+int NoOfDays;
+int Rooms; 
 
-char CustName[100];
+
 int Age;
 
 
@@ -64,7 +70,7 @@ int DataPrint()
         return 1;
     }
     // Saving data in file
-    fprintf(fp, "%s, %d , %s, %d\n", CustName,Age,PlaceChosen,PricePerDayChosen);
+    fprintf(fp, "Name : %s, Age : %d , Place Chosen : %s, Price Per Day: %d, Number Of People : %d, Number Of Days Stay: %d, Rooms Booked : %d, Grand Total : %d Rs\n", CustName,Age,PlaceChosen,PricePerDayChosen,NoOfPpl,NoOfDays,Rooms,TotalPrice);
   
     printf("\nNew Account added to record \n");
   
@@ -97,16 +103,26 @@ void GetElementsFromString()
     PricePerDayChosen = atoi(array[2]);
     printf("%d", PricePerDayChosen);
 }  
+void PriceCompute(int TravelCost)
+{
+    printf("Enter the Number Of People :");
+    scanf("%d",&NoOfPpl);
+    printf("Enter the number of Days :");
+    scanf("%d",&NoOfDays);
+    Rooms = ceil((float)NoOfPpl/4);
+    TotalPrice = (TravelCost*NoOfPpl) + (NoOfDays*PricePerDayChosen)*Rooms;
+    
+}
 int DestinationChoose()
 {
     int lineChoose ;
 
 
 
-    int NA = 75000;
-    int AS = 30000;
-    int EU = 55000;
-    int AU = 85000;
+    int NA = 90000; //Round Cost
+    int AS = 50000;
+    int EU = 60000;
+    int AU = 90000;
     printf("Choose the Continent you would like to travel to.\n");
     printf("1. North America\n"); 
     printf("2. Asia\n");
@@ -119,11 +135,13 @@ int DestinationChoose()
     switch (choose)
     {
     case 1:
-        OpenAndReadFile("NA.csv");
+        OpenAndReadFile("d1na.csv");
         printf("\n  Enter the Place you want to travel to ");
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
-        ConvertLineToString("NA.csv",LineChoose_t);
+        ConvertLineToString("d1na.csv",LineChoose_t);
+        PriceCompute(NA);
+        printf("%d", TotalPrice);
     break;
     case 2:
         OpenAndReadFile("d1asia.csv");
@@ -131,6 +149,7 @@ int DestinationChoose()
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1asia.csv",LineChoose_t);
+        PriceCompute(AS);
     break; 
     case 3:
         OpenAndReadFile("d1euro.csv");
@@ -138,6 +157,7 @@ int DestinationChoose()
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1euro.csv",LineChoose_t);
+        PriceCompute(EU);
       
     break;
     case 4: 
@@ -146,6 +166,7 @@ int DestinationChoose()
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1aus.csv",LineChoose_t);
+        PriceCompute(AU);
         
     break;
     default:
