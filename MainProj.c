@@ -8,6 +8,7 @@ int LineChoose_t;
 char Str[1024];
 char *array[10];
 
+char Gender[100];
 char CustName[100];
 char PlaceChosen[1000];
 int PricePerDayChosen;
@@ -59,7 +60,7 @@ int DataPrint()
     
    FILE* fp = fopen("DataStore.csv", "a+");
      
-    char Gender;
+    
   
   
   
@@ -70,7 +71,7 @@ int DataPrint()
         return 1;
     }
     // Saving data in file
-    fprintf(fp, "Name : %s, Age : %d , Place Chosen : %s, Price Per Day: %d, Number Of People : %d, Number Of Days Stay: %d, Rooms Booked : %d, Grand Total : %d Rs\n", CustName,Age,PlaceChosen,PricePerDayChosen,NoOfPpl,NoOfDays,Rooms,TotalPrice);
+    fprintf(fp, "Name : %s, Age : %d , Gender : %s, Place Chosen : %s, Price Per Day: %d, Number Of People : %d, Number Of Days Stay: %d, Rooms Booked : %d, Grand Total : %d Rs\n", CustName,Age,Gender,PlaceChosen,PricePerDayChosen,NoOfPpl,NoOfDays,Rooms,TotalPrice);
   
     printf("\nNew Account added to record \n");
   
@@ -99,9 +100,9 @@ void GetElementsFromString()
 }
     strcpy(PlaceChosen,array[1]);
     //printf("%s",array[1]);
-    printf("%s",PlaceChosen);
+    //printf("%s",PlaceChosen);
     PricePerDayChosen = atoi(array[2]);
-    printf("%d", PricePerDayChosen);
+    //printf("%d", PricePerDayChosen);
 }  
 void PriceCompute(int TravelCost)
 {
@@ -110,9 +111,17 @@ void PriceCompute(int TravelCost)
     printf("Enter the number of Days :");
     scanf("%d",&NoOfDays);
     Rooms = ceil((float)NoOfPpl/4);
-    TotalPrice = (TravelCost*NoOfPpl) + (NoOfDays*PricePerDayChosen)*Rooms;
+   // printf("%d",PricePerDayChosen);
+    TotalPrice = ((TravelCost*NoOfPpl) + (NoOfDays*PricePerDayChosen)*Rooms);
     
 }
+void StoringString()
+{
+    
+   // printf("%s",Str);
+    GetElementsFromString();
+
+}   
 int DestinationChoose()
 {
     int lineChoose ;
@@ -140,8 +149,9 @@ int DestinationChoose()
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1na.csv",LineChoose_t);
+        StoringString();
         PriceCompute(NA);
-        printf("%d", TotalPrice);
+        //printf("%d ", TotalPrice);
     break;
     case 2:
         OpenAndReadFile("d1asia.csv");
@@ -149,6 +159,7 @@ int DestinationChoose()
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1asia.csv",LineChoose_t);
+        StoringString();
         PriceCompute(AS);
     break; 
     case 3:
@@ -157,6 +168,7 @@ int DestinationChoose()
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1euro.csv",LineChoose_t);
+        StoringString();
         PriceCompute(EU);
       
     break;
@@ -166,6 +178,7 @@ int DestinationChoose()
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1aus.csv",LineChoose_t);
+        StoringString();
         PriceCompute(AU);
         
     break;
@@ -197,13 +210,7 @@ void ConvertLineToString(char *FLEN ,int lne)
     }
     fclose(fd);
 }
-void StoringString()
-{
-    
-    printf("%s",Str);
-    GetElementsFromString();
 
-}   
 void Exit()
 {
     exit(0);
@@ -233,8 +240,10 @@ void menu()
         //scanf("%s", &Gender);
         printf("\nEnter Your Age\n");
         scanf("%d", &Age);
+        printf("\nEnter Your Gender (Male , Female , Others)\n");
+        scanf("%s",&Gender);
         DestinationChoose();
-        StoringString();
+        
         DataPrint();
 
         break;
