@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include <math.h>
+#include<process.h>
 #define NUMLETTERS 100
 // Variables
 int LineChoose_t;
@@ -125,7 +126,7 @@ void StoringString()
 int DestinationChoose()
 {
     int lineChoose ;
-
+    int yesno;
 
 
     int NA = 90000; //Round Cost
@@ -144,7 +145,24 @@ int DestinationChoose()
     switch (choose)
     {
     case 1:
-        OpenAndReadFile("d1na.csv");
+        printf("Do you want to open the options in a Excel Document? \n");
+        printf("1. Yes");
+        printf("2. No");
+        scanf("%d",&yesno);
+        if(yesno==1)//|| strcmp("y",yesno))
+        {
+            system("start d1na.xlsx");
+        }
+        else if(yesno==2)//|| strcmp("n",yesno))
+        {
+            OpenAndReadFile("d1na.csv");
+            
+        }
+        else
+        {
+            printf("Enter a Valid Option: \n");
+            break;
+        }
         printf("\n  Enter the Place you want to travel to ");
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
@@ -154,7 +172,23 @@ int DestinationChoose()
         //printf("%d ", TotalPrice);
     break;
     case 2:
-        OpenAndReadFile("d1asia.csv");
+        printf("Do you want to open the options in a Excel Document? \n");
+        printf("1. Yes\n");
+        printf("2. No\n");
+        scanf("%d",&yesno);
+        if(yesno==1)
+        {
+            system("start d1asia.xlsx");
+        }
+        else if(yesno==2)
+        {
+            OpenAndReadFile("d1asia.csv");
+        }
+        else
+        {
+            printf("Enter a Valid Option: \n");
+            break;
+        }
         printf("\n Enter the Place you want to travel to ");
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
@@ -163,8 +197,30 @@ int DestinationChoose()
         PriceCompute(AS);
     break; 
     case 3:
-        OpenAndReadFile("d1euro.csv");
+        
+        //OpenAndReadFile("d1euro.csv");
+        printf("Do you want to open the options in a Excel Document? \n");
+        printf("1. Yes\n");
+        printf("2. No\n");
+        scanf("%d",&yesno);
+        
+        if(yesno==1)
+        {
+            system("start d1euro.xlsx");
+        }
+        else if(yesno==2)
+        {
+            OpenAndReadFile("d1euro.csv");
+        }
+        else
+        {
+            printf("Enter a Valid Option: \n");
+            break;
+        }
+        
+        
         printf("\n  Enter the Place you want to travel to ");
+        
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1euro.csv",LineChoose_t);
@@ -173,7 +229,23 @@ int DestinationChoose()
       
     break;
     case 4: 
-        OpenAndReadFile("d1aus.csv");
+        printf("Do you want to open the options in a Excel Document? \n");
+        printf("1. Yes\n");
+        printf("2. No\n");
+        scanf("%d",&yesno);
+        if(yesno==1)
+        {
+            system("start d1aus.xlsx");
+        }
+        else if(yesno==2)
+        {
+            OpenAndReadFile("d1aus.csv");
+        }
+        else
+        {
+            printf("Enter a Valid Option: \n");
+            break;
+        }
         printf("\n  Enter the Place you want to travel to ");
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
