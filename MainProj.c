@@ -3,6 +3,7 @@
 #include<string.h>
 #include <math.h>
 #include<process.h>
+#include <time.h>
 #define NUMLETTERS 100
 // Variables
 int LineChoose_t;
@@ -20,6 +21,9 @@ int Rooms;
 
 
 int Age;
+
+int hours, minutes, seconds, day, month, year;
+int Day,Month,Year, MaxDay,t;
 
 
 void OpenAndReadFile(char* Filename)
@@ -60,11 +64,6 @@ int DataPrint()
 {
     
    FILE* fp = fopen("DataStore.csv", "a+");
-     
-    
-  
-  
-  
     if (fp == NULL)
     { 
         // Error in file opening
@@ -73,7 +72,6 @@ int DataPrint()
     }
     // Saving data in file
     fprintf(fp, "Name : %s, Age : %d , Gender : %s, Place Chosen : %s, Price Per Day: %d, Number Of People : %d, Number Of Days Stay: %d, Rooms Booked : %d, Grand Total : %d Rs\n", CustName,Age,Gender,PlaceChosen,PricePerDayChosen,NoOfPpl,NoOfDays,Rooms,TotalPrice);
-  
     printf("\nNew Account added to record \n");
   
     fclose(fp);
@@ -282,15 +280,16 @@ void ConvertLineToString(char *FLEN ,int lne)
     }
     fclose(fd);
 }
-
 void Exit()
 {
     exit(0);
 }
 void menu()
 {   
-
+    int lineChoose ;
+    int yesno;
     int choice;
+    char Gen;
     printf("\t \tHi, Welcome to the Booking System\n");
     printf("1. Book Custom Tickets\n");
     printf("2. Book Package\n");
@@ -302,8 +301,8 @@ void menu()
 
     switch (choice)
     {
-    case 1:
-    {  
+     case 1:
+      {  
         // Asking user input for the
         // new record to be added
         printf("\nEnter Your Name\n");
@@ -312,17 +311,114 @@ void menu()
         //scanf("%s", &Gender);
         printf("\nEnter Your Age\n");
         scanf("%d", &Age);
-        printf("\nEnter Your Gender (Male , Female , Others)\n");
-        scanf("%s",&Gender);
+        printf("\nEnter Your Gender (M/F/O)\n");
+        scanf("%s",&Gen);
+        switch (Gen)
+        {
+        case 'M' :
+            strcpy(Gender,"Male");
+            break;
+        case 'F' :
+            strcpy(Gender,"Female");
+            break;
+        case 'O' :
+            strcpy(Gender,"Others");
+            break;
+        case 'm' :
+            strcpy(Gender,"Male");
+            break;
+        case 'f' :
+            strcpy(Gender,"Female");
+            break;
+        case 'o' :
+            strcpy(Gender,"Others");
+            break;
+        default:
+            printf("Invalid Option");
+            strcpy(Gender,"N/A");
+            break;
+        }
+        
         DestinationChoose();
         
         DataPrint();
 
         break;
+     }
+   
+        
+    
+      case 2:
+      {  
+        // Asking user input for the
+        // new record to be added
+        printf("\nEnter Your Name\n");
+        scanf("%s", &CustName);
+        //printf("\nEnter Available Amount\n");
+        //scanf("%s", &Gender);
+        printf("\nEnter Your Age\n");
+        scanf("%d", &Age);
+        printf("\nEnter Your Gender (M/F/O)\n");
+        scanf("%s",&Gen);
+        switch (Gen)
+        {
+        case 'M' :
+            strcpy(Gender,"Male");
+            break;
+        case 'F' :
+            strcpy(Gender,"Female");
+            break;
+        case 'O' :
+            strcpy(Gender,"Others");
+            break;
+        case 'm' :
+            strcpy(Gender,"Male");
+            break;
+        case 'f' :
+            strcpy(Gender,"Female");
+            break;
+        case 'o' :
+            strcpy(Gender,"Others");
+            break;
+        default:
+            printf("Invalid Option");
+            strcpy(Gender,"N/A");
+            break;
+        }
+        
+        printf("Do you want to open the options in a Excel Document? \n");
+        printf("1. Yes");
+        printf("2. No\n");
+        scanf("%d",&yesno);
+        if(yesno==1)//|| strcmp("y",yesno))
+        {
+            system("start Package.xlsx");
+        }
+        else if(yesno==2)//|| strcmp("n",yesno))
+        {
+            OpenAndReadFile("Package.csv");
+            
+        }
+        else
+        {
+            printf("Enter a Valid Option: \n");
+            break;
+        }
+        printf("\n  Enter the Place you want to travel to ");
+        scanf("%d",&lineChoose);
+        LineChoose_t = lineChoose;
+        ConvertLineToString("Package.csv",LineChoose_t);
+        StoringString();
+        PriceCompute(24000);
+        
+        DataPrint();
+
+        break;
+      }
     }
     
    
-    }
+    
     
    
 }
