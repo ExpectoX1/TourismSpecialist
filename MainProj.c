@@ -18,6 +18,7 @@ int TotalPrice;
 int NoOfPpl;
 int NoOfDays;
 int Rooms; 
+int ID;
 
 
 int Age;
@@ -78,15 +79,42 @@ int DataPrint()
     return 0;    
 
 }
-int printRandoms(int lower, int upper,  int count)
+int GenrateRandomUniqueID()
 {
-    int i;
-    for (i = 0; i < count; i++) {
-        int num = (rand() %
-           (upper - lower + 1)) + lower;
-        return num;
+    
+     FILE *fp = fopen("ids.txt","at+");
+    int arr[7];
+    int lower = 1000, upper = 9999, count = 10;
+
+    srand(time(0));
+
+   // printf("The random numbers are: ");
+    for (int i = 0; i < count; i++) 
+    {
+        int num = (rand() % (upper - lower + 1)) + lower;
+        arr[i] = num;
+        
     }
-}    
+    for(int i = 0 ; i < 5;i++)
+    {
+      //  printf("%d",arr[i]);
+    }
+
+    int lower1 = 0, upper1 = 4, count1 = 1;
+
+    srand(time(0));
+
+  //  printf("The random numbers are: ");
+    for (int i = 0; i < count1; i++) {
+        int x = (rand() % (upper1 - lower1 + 1)) + lower1;
+        //printf("%d ", x);
+        //printf("%d",arr[x]);s
+        ID = arr[x];
+        fprintf(fp,"%d\n",arr[x]);
+        printf("%d",ID);
+    }
+    return 0;
+} 
 void GetElementsFromString()
 { 
     int i=0;
@@ -105,9 +133,9 @@ void GetElementsFromString()
 }  
 void PriceCompute(int TravelCost)
 {
-    printf("Enter the Number Of People :");
+    printf("Enter the Number Of People : ");
     scanf("%d",&NoOfPpl);
-    printf("Enter the number of Days :");
+    printf("Enter the number of Days : ");
     scanf("%d",&NoOfDays);
     Rooms = ceil((float)NoOfPpl/4);
    // printf("%d",PricePerDayChosen);
@@ -136,6 +164,7 @@ int DestinationChoose()
     printf("2. Asia\n");
     printf("3. Europe\n");
     printf("4. Australia\n");
+    printf("Enter your choice : ");
 
     int choose  = 0 ; 
     scanf("%d",&choose);
@@ -144,8 +173,9 @@ int DestinationChoose()
     {
     case 1:
         printf("Do you want to open the options in a Excel Document? \n");
-        printf("1. Yes");
-        printf("2. No");
+        printf("1. Yes\n");
+        printf("2. No\n");
+        printf("Enter your choice : ");
         scanf("%d",&yesno);
         if(yesno==1)//|| strcmp("y",yesno))
         {
@@ -161,7 +191,7 @@ int DestinationChoose()
             printf("Enter a Valid Option: \n");
             break;
         }
-        printf("\n  Enter the Place you want to travel to ");
+        printf("\nEnter the Place you want to travel to : ");
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1na.csv",LineChoose_t);
@@ -173,6 +203,7 @@ int DestinationChoose()
         printf("Do you want to open the options in a Excel Document? \n");
         printf("1. Yes\n");
         printf("2. No\n");
+        printf("Enter your choice : ");
         scanf("%d",&yesno);
         if(yesno==1)
         {
@@ -187,7 +218,7 @@ int DestinationChoose()
             printf("Enter a Valid Option: \n");
             break;
         }
-        printf("\n Enter the Place you want to travel to ");
+        printf("\nEnter the Place you want to travel to : ");
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1asia.csv",LineChoose_t);
@@ -200,6 +231,7 @@ int DestinationChoose()
         printf("Do you want to open the options in a Excel Document? \n");
         printf("1. Yes\n");
         printf("2. No\n");
+        printf("Enter your choice : ");
         scanf("%d",&yesno);
         
         if(yesno==1)
@@ -217,7 +249,7 @@ int DestinationChoose()
         }
         
         
-        printf("\n  Enter the Place you want to travel to ");
+        printf("\nEnter the Place you want to travel to :  ");
         
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
@@ -230,6 +262,7 @@ int DestinationChoose()
         printf("Do you want to open the options in a Excel Document? \n");
         printf("1. Yes\n");
         printf("2. No\n");
+        printf("Enter your choice : ");
         scanf("%d",&yesno);
         if(yesno==1)
         {
@@ -244,7 +277,7 @@ int DestinationChoose()
             printf("Enter a Valid Option: \n");
             break;
         }
-        printf("\n  Enter the Place you want to travel to ");
+        printf("\nEnter the Place you want to travel to :  ");
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("d1aus.csv",LineChoose_t);
@@ -290,13 +323,15 @@ void menu()
     int yesno;
     int choice;
     char Gen;
+    int IDEnter;
     printf("\t \tHi, Welcome to the Booking System\n");
     printf("1. Book Custom Tickets\n");
     printf("2. Book Package\n");
-    printf("3. View Tickets(Under Constructon)\n");
-    printf("4. Cancel Tickeit(Under Construction)\n");
+    printf("3. View Tickets\n");
+    printf("4. Cancel Tickets\n");
     printf("5. Exit Program\n");
-    printf("6. Manager Portal\n ");
+    printf("6. Manager Portal\n");
+    printf("Enter your choice : ");
     scanf("%d",&choice);
 
     switch (choice)
@@ -305,13 +340,13 @@ void menu()
       {  
         // Asking user input for the
         // new record to be added
-        printf("\nEnter Your Name\n");
+        printf("Enter Your Name : ");
         scanf("%s", &CustName);
         //printf("\nEnter Available Amount\n");
         //scanf("%s", &Gender);
-        printf("\nEnter Your Age\n");
+        printf("Enter Your Age : ");
         scanf("%d", &Age);
-        printf("\nEnter Your Gender (M/F/O)\n");
+        printf("Enter Your Gender (M/F/O) : ");
         scanf("%s",&Gen);
         switch (Gen)
         {
@@ -352,13 +387,13 @@ void menu()
       {  
         // Asking user input for the
         // new record to be added
-        printf("\nEnter Your Name\n");
+        printf("\nEnter Your Name : \n");
         scanf("%s", &CustName);
         //printf("\nEnter Available Amount\n");
         //scanf("%s", &Gender);
-        printf("\nEnter Your Age\n");
+        printf("\nEnter Your Age :\n");
         scanf("%d", &Age);
-        printf("\nEnter Your Gender (M/F/O)\n");
+        printf("\nEnter Your Gender (M/F/O) : \n");
         scanf("%s",&Gen);
         switch (Gen)
         {
@@ -387,7 +422,7 @@ void menu()
         }
         
         printf("Do you want to open the options in a Excel Document? \n");
-        printf("1. Yes");
+        printf("1. Yes\n");
         printf("2. No\n");
         scanf("%d",&yesno);
         if(yesno==1)//|| strcmp("y",yesno))
@@ -404,7 +439,7 @@ void menu()
             printf("Enter a Valid Option: \n");
             break;
         }
-        printf("\n  Enter the Place you want to travel to ");
+        printf("\n  Enter the Place you want to travel to : ");
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("Package.csv",LineChoose_t);
@@ -415,7 +450,23 @@ void menu()
 
         break;
       }
+      
+      case 3:
+      {
+          
+          printf("--------------Welcome to Tourism Specialist--------------- \n");
+          printf("Enter your Unique ID at the time of booking your Tickets : ");
+          scanf("%d",&IDEnter);
+          // check if id is in the file of DataStore and print the Details of the 
+          system("start ids.txt");
+      }
+      default :
+      {
+          printf("Enter a Valid Option\n");
+          menu();
+      }
     }
+
     
    
     
