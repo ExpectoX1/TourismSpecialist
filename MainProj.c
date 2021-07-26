@@ -9,6 +9,7 @@
 int LineChoose_t;
 char Str[1024];
 char *array[10];
+int IDEnter; // ID Entered by the person
 
 char Gender[100];
 char CustName[100];
@@ -19,6 +20,7 @@ int NoOfPpl;
 int NoOfDays;
 int Rooms; 
 int ID;
+int tracer=0;
 
 
 int Age;
@@ -72,8 +74,8 @@ int DataPrint()
         return 1;
     }
     // Saving data in file
-    fprintf(fp, "Name : %s, Age : %d , Gender : %s, Place Chosen : %s, Price Per Day: %d, Number Of People : %d, Number Of Days Stay: %d, Rooms Booked : %d, Grand Total : %d Rs\n", CustName,Age,Gender,PlaceChosen,PricePerDayChosen,NoOfPpl,NoOfDays,Rooms,TotalPrice);
-    printf("\nNew Account added to record \n");
+    fprintf(fp, "Unique ID : %d, Name : %s, Age : %d , Gender : %s, Place Chosen : %s, Price Per Day: %d, Number Of People : %d, Number Of Days Stay: %d, Rooms Booked : %d, Grand Total : %d Rs\n", ID,CustName,Age,Gender,PlaceChosen,PricePerDayChosen,NoOfPpl,NoOfDays,Rooms,TotalPrice);
+    printf("Ticket Booking Confirmed ! \n");
   
     fclose(fp);
     return 0;    
@@ -82,7 +84,7 @@ int DataPrint()
 int GenrateRandomUniqueID()
 {
     
-     FILE *fp = fopen("ids.txt","at+");
+    FILE *fp = fopen("ids.txt","a+");
     int arr[7];
     int lower = 1000, upper = 9999, count = 10;
 
@@ -111,7 +113,7 @@ int GenrateRandomUniqueID()
         //printf("%d",arr[x]);s
         ID = arr[x];
         fprintf(fp,"%d\n",arr[x]);
-        printf("%d",ID);
+        printf("Your Unique ID is %d, Please remember it for future reference\n",ID);
     }
     return 0;
 } 
@@ -122,9 +124,9 @@ void GetElementsFromString()
     array[i] = strtok(Str,",");
 
     while(array[i]!=NULL)
-{
+ {
    array[++i] = strtok(NULL,",");
-}
+ }
     strcpy(PlaceChosen,array[1]);
     //printf("%s",array[1]);
     //printf("%s",PlaceChosen);
@@ -133,6 +135,7 @@ void GetElementsFromString()
 }  
 void PriceCompute(int TravelCost)
 {
+    int a  = 8377;
     printf("Enter the Number Of People : ");
     scanf("%d",&NoOfPpl);
     printf("Enter the number of Days : ");
@@ -140,6 +143,8 @@ void PriceCompute(int TravelCost)
     Rooms = ceil((float)NoOfPpl/4);
    // printf("%d",PricePerDayChosen);
     TotalPrice = ((TravelCost*NoOfPpl) + (NoOfDays*PricePerDayChosen)*Rooms);
+    printf("Your Total Booking amount is  : %ld Rs.\n",TotalPrice);
+    GenrateRandomUniqueID();
     
 }
 void StoringString()
@@ -153,7 +158,7 @@ int DestinationChoose()
 {
     int lineChoose ;
     int yesno;
-
+    int choose ; 
 
     int NA = 90000; //Round Cost
     int AS = 50000;
@@ -166,7 +171,7 @@ int DestinationChoose()
     printf("4. Australia\n");
     printf("Enter your choice : ");
 
-    int choose  = 0 ; 
+    
     scanf("%d",&choose);
 
     switch (choose)
@@ -285,12 +290,64 @@ int DestinationChoose()
         PriceCompute(AU);
         
     break;
+    
     default:
+    {
         printf("Please Enter a Valid Option\n");
         DestinationChoose();
-    break;
+        
+    }
+        
+    
     }
 }
+void IDCheck()
+{
+     FILE *fp = NULL;
+	char *line,*record;
+	char buffer[1024];
+	if ((fp = fopen( "ids.txt", "r")) != NULL)
+	{
+		
+       
+        char temp[100];
+        char t[100];
+		
+        
+        //char search[100] = "Sid";
+		 while ((line = fgets(buffer, sizeof(buffer), fp))!=NULL)//The loop continues when the end of the file is not read
+		{
+            
+            strcpy(temp,strtok(buffer ," "));
+            //printf("%s",temp);
+            int a  = atoi(temp);
+           // printf("%d",a);
+            if(a == IDEnter)
+            {
+               // printf("reached here");
+               // printf("%d",count);
+               printf("%d",tracer);
+               printf("We found A record using your Unique ID : \n");
+            }
+            else
+            {
+                tracer++;
+               // printf("Not");
+                
+            }
+
+		}
+	
+
+        ConvertLineToString("DataStore.csv",tracer);
+        //printf("reached");
+        printf("%s",Str);
+	    fclose(fp);
+		fp = NULL;
+        strcpy(Str, " ");
+	}
+}
+
 void ConvertLineToString(char *FLEN ,int lne)
 {
     char str[1024];
@@ -313,6 +370,8 @@ void ConvertLineToString(char *FLEN ,int lne)
     }
     fclose(fd);
 }
+
+
 void Exit()
 {
     exit(0);
@@ -323,7 +382,7 @@ void menu()
     int yesno;
     int choice;
     char Gen;
-    int IDEnter;
+    
     printf("\t \tHi, Welcome to the Booking System\n");
     printf("1. Book Custom Tickets\n");
     printf("2. Book Package\n");
@@ -375,8 +434,8 @@ void menu()
         }
         
         DestinationChoose();
-        
         DataPrint();
+       
 
         break;
      }
@@ -458,8 +517,18 @@ void menu()
           printf("Enter your Unique ID at the time of booking your Tickets : ");
           scanf("%d",&IDEnter);
           // check if id is in the file of DataStore and print the Details of the 
-          system("start ids.txt");
+          break;
       }
+
+      case 4:
+      {
+          printf("--------------Welcome to Tourism Specialist--------------- \n");
+          printf("Enter your Unique ID given at the time of booking your Tickets : ");
+          scanf("%d",&IDEnter);
+          //printf("%d\n",IDEnter);
+          IDCheck();
+          break;
+        }
       default :
       {
           printf("Enter a Valid Option\n");
@@ -478,4 +547,3 @@ int main()
     menu();
     return 0;
     }
-
