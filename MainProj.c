@@ -5,30 +5,204 @@
 #include<process.h>
 #include <time.h>
 #define NUMLETTERS 100
+#define MAXLEN1000 1000
+#define MAXLEN100 100
 // Variables
 int LineChoose_t;
 char Str[1024];
 char *array[10];
 int IDEnter; // ID Entered by the person
+char DataStoreLine[MAXLEN1000];
 
-char Gender[100];
-char CustName[100];
-char PlaceChosen[1000];
+char Gender[MAXLEN100];
+char CustName[MAXLEN100];
+char PlaceChosen[MAXLEN1000];
 int PricePerDayChosen;
 int TotalPrice;
 int NoOfPpl;
 int NoOfDays;
 int Rooms; 
 int ID;
-int tracer=0;
-
-
+int tracer=1;
 int Age;
-
 int hours, minutes, seconds, day, month, year;
 int Day,Month,Year, MaxDay,t;
+int DeleteEntry(char *FileName , int delete_line )
+{
+    FILE *fileptr1, *fileptr2;
+    
+    char ch;
+    char line1[10000];
+    int temp = 1;
+
+   // printf("Enter file name: ");
+   // scanf("%s", FileName);
+    //open file in read mode
+    fileptr1 = fopen(FileName, "r");
+   // ch = getc(fileptr1);
+ //  while (ch != EOF)
+   // {
+    //    printf("%c", ch);
+     //   ch = getc(fileptr1);
+   // }
+    //rewind
+    rewind(fileptr1); // go to the begining of the file pointer
+    //printf(" \n Enter line number of the line to be deleted:");
+    //scanf("%d", &delete_line);
+    //open new file in write mode
+    fileptr2 = fopen("replica.c", "w");
+    ch = 'A';
+    while (fgets(line1,100000,fileptr1) != NULL)
+    {
+    
+        //except the line to be deleted
+        if (temp != delete_line)
+        {
+            //copy all lines in file replica.c
+            fprintf(fileptr2 ,"%s", line1);
+        }
+        temp++;
+    }
+    fclose(fileptr1);
+    fclose(fileptr2);
+    remove(FileName);
+    //rename the file replica.c to original name
+    rename("replica.c", FileName);
+    //printf("\n The contents of file after being modified are as follows:\n");
+    //fileptr1 = fopen(filename, "r");
+    //ch = getc(fileptr1);
+    //while (ch != EOF)
+   // {
+       // printf("%c", ch);
+   //   //  ch = getc(fileptr1);
+    //}
+    fclose(fileptr1);
+    return 0;
+}
+
+int CheckOS()
+{  
+// C program to detect Operating System
+  
+  
+// Driver Code
 
 
+  
+// Checking for windows OS with
+// _WIN32 macro
+#ifdef _WIN32
+    //printf("Hey Geek it seems that"
+           //"you are working on a Windows OS.\n");
+           return 1;
+  
+// Checking for mac OS with
+// __APPLE__ macro
+#elif __APPLE__
+   // printf("Hey Geek it seems that you"
+        //   "are working on a Mac OS.\n");
+           return 2;
+  
+// Checking for linux OS with
+// __linux__ macro
+#elif __linux__
+    //printf("Hey Geek it seems that you"
+         //  "are working on a Linux OS.\n");
+         return 3;
+          
+// Checking for iOS embedded OS with
+// TARGET_OS_EMBEDDED macro
+#elif TARGET_OS_EMBEDDED
+    printf("Hey Geek it seems that you"
+           "are working on an iOS embedded OS.\n");
+  
+// Checking for iOS simulator OS with
+// TARGET_IPHONE_SIMULATOR macro
+#elif TARGET_IPHONE_SIMULATOR
+    printf("Hey Geek it seems that you"
+           "are working on an iOS simulator OS.\n");
+  
+// Checking for iPhone OS with
+// TARGET_OS_IPHONE macro
+#elif TARGET_OS_IPHONE
+    printf("Hey Geek it seems that you"
+           "are working on an iPhone OS.\n");
+  
+// Checking for MAC OS with
+// TARGET_OS_MAC macro
+#elif TARGET_OS_MAC
+    printf("Hey Geek it seems that you"
+           "are working on a MAC OS.\n");
+  
+// Checking for Android OS with
+// __ANDROID__ macro
+#elif__ANDROID__
+    printf("Hey Geek it seems that you"
+           "are working on an android OS.\n");
+  
+// Checking for unix OS with
+// __unix__ macro
+#elif __unix__
+    printf("Hey Geek it seems that you"
+           "are working on a unix OS.\n");
+  
+// Checking for POSIX based OS with
+// _POSIX_VERSION macro
+#elif _POSIX_VERSION
+    printf("Hey Geek it seems that you"
+           "are working on a POSIX based OS.\n");
+  
+// Checking for Solaris OS with
+// __sun macro
+#elif __sun
+    printf("Hey Geek it seems that you"
+           "are working on a Solaris OS.\n");
+  
+// Checking for HP UX OS with
+// __hpux macro
+#elif __hpux
+    printf("Hey Geek it seems that you"
+           "are working on a HP UX OS.\n");
+  
+// Checking for BSD OS with
+// BSD macro
+#elif BSD
+    printf("Hey Geek it seems that you"
+           "are working on a Solaris OS.\n");
+  
+// Checking for DragonFly BSD OS with
+// __DragonFly__ macro
+#elif __DragonFly__
+    printf("Hey Geek it seems that you"
+           "are working on a DragonFly BSD OS.\n");
+  
+// Checking for FreeBSD OS with
+// __FreeBSD__ macro
+#elif __FreeBSD__
+    printf("Hey Geek it seems that you"
+           "are working on a FreeBSD OS.\n");
+  
+// Checking for Net BSD OS with
+// __NetBSD__ macro
+#elif __NetBSD__
+    printf("Hey Geek it seems that you"
+           "are working on a Net BSD OS.\n");
+  
+// Checking for Open BSD OS with
+// __OpenBSD__ macro
+#elif __OpenBSD__
+    printf("Hey Geek it seems that you"
+           "are working on an Open BSD OS.\n");
+  
+// If neither of them is present
+// then this is printed...
+#else
+    printf("Sorry, the system are"
+           "not listed above.\n");
+#endif
+    return 0;
+
+}
 void OpenAndReadFile(char* Filename)
 {
     FILE *fp = NULL;
@@ -184,7 +358,14 @@ int DestinationChoose()
         scanf("%d",&yesno);
         if(yesno==1)//|| strcmp("y",yesno))
         {
-            system("start d1na.xlsx");
+           if(CheckOS ==1)
+           {
+                system("start d1na.xlsx");
+           }
+           else if(CheckOS == 2)
+           {
+                system("libreoffice --calc d1na.xlsx"); // come here later
+           }
         }
         else if(yesno==2)//|| strcmp("n",yesno))
         {
@@ -301,6 +482,28 @@ int DestinationChoose()
     
     }
 }
+void LinePrint(char *FileName ,  int l)
+{
+	int count = 1;
+	FILE *fp1 = fopen(FileName, "r");
+	//fgets(line , 1000 , fp1);
+	
+	while(fgets(DataStoreLine , 1000 , fp1) != NULL)
+	{
+		
+		if(count == l)
+		{
+			printf("%s \n",DataStoreLine); /// Printing the Person's Data out 
+			count =1;
+			break;
+		}
+		else
+		{
+			count = count +1;
+		}
+	}
+
+}
 void IDCheck()
 {
      FILE *fp = NULL;
@@ -328,6 +531,8 @@ void IDCheck()
                // printf("%d",count);
                printf("%d",tracer);
                printf("We found A record using your Unique ID : \n");
+               LinePrint("DataStore.csv",tracer);
+               break;
             }
             else
             {
@@ -336,18 +541,12 @@ void IDCheck()
                 
             }
 
-		}
-	
-
-        ConvertLineToString("DataStore.csv",tracer);
-        //printf("reached");
-        printf("%s",Str);
+		} 
 	    fclose(fp);
 		fp = NULL;
-        strcpy(Str, " ");
+        
 	}
 }
-
 void ConvertLineToString(char *FLEN ,int lne)
 {
     char str[1024];
@@ -370,8 +569,6 @@ void ConvertLineToString(char *FLEN ,int lne)
     }
     fclose(fd);
 }
-
-
 void Exit()
 {
     exit(0);
@@ -516,6 +713,7 @@ void menu()
           printf("--------------Welcome to Tourism Specialist--------------- \n");
           printf("Enter your Unique ID at the time of booking your Tickets : ");
           scanf("%d",&IDEnter);
+          IDCheck();
           // check if id is in the file of DataStore and print the Details of the 
           break;
       }
@@ -527,12 +725,19 @@ void menu()
           scanf("%d",&IDEnter);
           //printf("%d\n",IDEnter);
           IDCheck();
+          
+          DeleteEntry("DataStore.csv",tracer);
+          printf("%d",tracer);
+          //DeleteEntry("DataStore.csv",tracer);
+         // DeleteEntry("ids.txt",tracer);
+          printf("deleted");
           break;
         }
       default :
       {
           printf("Enter a Valid Option\n");
           menu();
+          break;
       }
     }
 
