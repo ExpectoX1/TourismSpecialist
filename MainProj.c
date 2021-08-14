@@ -27,6 +27,21 @@ int tracer=1;
 int Age;
 int hours, minutes, seconds, day, month, year;
 int Day,Month,Year, MaxDay,t;
+
+
+void MangerPortal()
+{
+    char str[1000];
+    FILE *fp1 = fopen("DataStore.csv","a+");
+    FILE *fp2 = fopen("ManagerFile.txt" , "w");
+    while( fgets(str,10000,fp1) != NULL)
+    {
+        fprintf(fp2, "%s",str);
+    }
+    fclose(fp1);
+    fclose(fp2);
+    system("start ManagerFile.txt");
+}
 int DeleteEntry(char *FileName , int delete_line )
 {
     FILE *fileptr1, *fileptr2;
@@ -59,6 +74,7 @@ int DeleteEntry(char *FileName , int delete_line )
         if (temp != delete_line)
         {
             //copy all lines in file replica.c
+           // printf("%s", line1);
             fprintf(fileptr2 ,"%s", line1);
         }
         temp++;
@@ -76,10 +92,9 @@ int DeleteEntry(char *FileName , int delete_line )
        // printf("%c", ch);
    //   //  ch = getc(fileptr1);
     //}
-    fclose(fileptr1);
+//fclose(fileptr1);
     return 0;
 }
-
 int CheckOS()
 {  
 // C program to detect Operating System
@@ -254,7 +269,7 @@ int DataPrint()
     fclose(fp);
     return 0;    
 
-}
+} // Siddharth
 int GenrateRandomUniqueID()
 {
     
@@ -481,7 +496,7 @@ int DestinationChoose()
         
     
     }
-}
+} //Shreyas S
 void LinePrint(char *FileName ,  int l)
 {
 	int count = 1;
@@ -502,6 +517,7 @@ void LinePrint(char *FileName ,  int l)
 			count = count +1;
 		}
 	}
+    fclose(fp1);
 
 }
 void IDCheck()
@@ -529,7 +545,7 @@ void IDCheck()
             {
                // printf("reached here");
                // printf("%d",count);
-               printf("%d",tracer);
+               // printf("%d",tracer);
                printf("We found A record using your Unique ID : \n");
                LinePrint("DataStore.csv",tracer);
                break;
@@ -578,6 +594,7 @@ void menu()
     int lineChoose ;
     int yesno;
     int choice;
+    int yn;
     char Gen;
     
     printf("\t \tHi, Welcome to the Booking System\n");
@@ -726,12 +743,29 @@ void menu()
           //printf("%d\n",IDEnter);
           IDCheck();
           
+         // DeleteEntry("DataStore.csv",tracer);
+         // printf("%d",tracer);
+          printf("Are You sure you want to delete the Booking 1.Yes 2.No \n");
+          scanf("%d",&yn);
+          if(yn == 1)
+          {
           DeleteEntry("DataStore.csv",tracer);
-          printf("%d",tracer);
-          //DeleteEntry("DataStore.csv",tracer);
-         // DeleteEntry("ids.txt",tracer);
-          printf("deleted");
+          DeleteEntry("ids.txt",tracer);
+          }
+         // printf("deleted");
           break;
+        }
+
+        case 5:
+        {
+            exit(0);
+            break;
+        }
+
+        case 6:
+        {
+            MangerPortal();
+            break;
         }
       default :
       {
@@ -746,9 +780,18 @@ void menu()
     
     
    
-}
+}//Shreyansh
 int main()
     {   
     menu();
     return 0;
     }
+
+// Instructions
+// What ever comments u make dont delete existing coments unless they bs 
+// try fixing the indentation if not proper
+// See if u can find a fix for the warnings
+// Make package csv we neeed atleat 30 entries so 10 each , try making your oen with reasonable prices
+// we need a discount funct its easy pls make im too bored to make :/
+// to make a discount func make generate a random number between 1 to 3 ,1 being 10% and 3 30% , just meke a func with price as the arg to do discount on ;
+// ill give 5 rs to the person who makes the function XD
