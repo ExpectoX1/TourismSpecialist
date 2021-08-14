@@ -795,3 +795,4 @@ int main()
 // we need a discount funct its easy pls make im too bored to make :/
 // to make a discount func make generate a random number between 1 to 3 ,1 being 10% and 3 30% , just meke a func with price as the arg to do discount on ;
 // ill give 5 rs to the person who makes the function XD
+// format for the package csv is mostly the same as the other csv made earlier refer them  , its the package name (all place included keep them max 4)(Delhi->NYC->EUROPE->Africa), price - 
