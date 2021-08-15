@@ -296,21 +296,21 @@ void GetElementsFromString()
     //printf("%d", PricePerDayChosen);
 }  
 // a sum function to get the total cost taking the price from the file and adding the additional costs based on the formula
-// continue from here
 void PriceCompute(int TravelCost)
-{
+{ // takes the input and computes the cost
     int a  = 8377;
     printf("Enter the Number Of People : ");
     scanf("%d",&NoOfPpl);
     printf("Enter the number of Days : ");
     scanf("%d",&NoOfDays);
-    Rooms = ceil((float)NoOfPpl/4);
+    Rooms = ceil((float)NoOfPpl/4); // casting because ceil converts it to the integer greater than the given number. Comes under math.h
    // printf("%d",PricePerDayChosen);
     TotalPrice = ((TravelCost*NoOfPpl) + (NoOfDays*PricePerDayChosen)*Rooms);
     printf("Your Total Booking amount is  : %ld Rs.\n",TotalPrice);
-    GenrateRandomUniqueID();
+    GenrateRandomUniqueID(); // calls the random number generator 
     
 }
+// link between two functions
 void StoringString()
 {
     
@@ -318,6 +318,7 @@ void StoringString()
     GetElementsFromString();
 
 }   
+// code block to take input from the user about the destination
 int DestinationChoose()
 {
     int lineChoose ;
@@ -337,7 +338,7 @@ int DestinationChoose()
 
     
     scanf("%d",&choose);
-
+	// switch case 
     switch (choose)
     {
     case 1:
@@ -369,9 +370,9 @@ int DestinationChoose()
         }
         printf("\nEnter the Place you want to travel to : ");
         scanf("%d",&lineChoose);
-        LineChoose_t = lineChoose;
-        ConvertLineToString("d1na.csv",LineChoose_t);
-        StoringString();
+        LineChoose_t = lineChoose; // linechoose is the particular line from the file
+        ConvertLineToString("d1na.csv",LineChoose_t);// opens the csv file 
+        StoringString();// stores the csv file ie the string from it into the required output
         PriceCompute(NA);
         //printf("%d ", TotalPrice);
     break;
@@ -383,11 +384,11 @@ int DestinationChoose()
         scanf("%d",&yesno);
         if(yesno==1)
         {
-            system("start d1asia.xlsx");
+            system("start d1asia.xlsx"); // similiar to the previous case opens the excel file
         }
         else if(yesno==2)
         {
-            OpenAndReadFile("d1asia.csv");
+            OpenAndReadFile("d1asia.csv"); // displays it in the command prompt
         }
         else
         {
@@ -395,11 +396,11 @@ int DestinationChoose()
             break;
         }
         printf("\nEnter the Place you want to travel to : ");
-        scanf("%d",&lineChoose);
+        scanf("%d",&lineChoose); // this corresponds to the  line in the file where the info regarding the place is stored
         LineChoose_t = lineChoose;
         ConvertLineToString("d1asia.csv",LineChoose_t);
         StoringString();
-        PriceCompute(AS);
+        PriceCompute(AS); // computes the price
     break; 
     case 3:
         
