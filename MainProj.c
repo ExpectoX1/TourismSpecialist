@@ -19,7 +19,7 @@ char CustName[MAXLEN100];
 char PlaceChosen[MAXLEN1000];
 int PricePerDayChosen;
 int TotalPrice;
-int NoOfPpl; // dffaig
+int NoOfPpl; 
 int NoOfDays;
 int Rooms; 
 int ID;
@@ -29,186 +29,157 @@ int hours, minutes, seconds, day, month, year;
 int Day,Month,Year, MaxDay,t;
 
 
-void MangerPortal()
+void MangerPortal()  // Function to Open a file for the Admin or manager. 
 {
     char str[1000];
-    FILE *fp1 = fopen("DataStore.csv","a+");
+    FILE *fp1 = fopen("DataStore.csv","a+"); // Open the file DataStore.csv and ManagerFile.txt
     FILE *fp2 = fopen("ManagerFile.txt" , "w");
     while( fgets(str,10000,fp1) != NULL)
     {
         fprintf(fp2, "%s",str);
     }
-    fclose(fp1);
+    fclose(fp1); // Close the respective files 
     fclose(fp2);
-    system("start ManagerFile.txt");
+    system("start ManagerFile.txt"); // open ManagerFile.txt
 }
-int DeleteEntry(char *FileName , int delete_line )
+int DeleteEntry(char *FileName , int delete_line )  // Delete a Entry/Ticket from our Data File
 {
-    FILE *fileptr1, *fileptr2;
+    FILE *fileptr1, *fileptr2; // File Pointers
     
     char ch;
     char line1[10000];
     int temp = 1;
 
-   // printf("Enter file name: ");
-   // scanf("%s", FileName);
+    // printf("Enter file name: ");
+    // scanf("%s", FileName);
     //open file in read mode
     fileptr1 = fopen(FileName, "r");
-   // ch = getc(fileptr1);
- //  while (ch != EOF)
-   // {
+    // ch = getc(fileptr1);
+    //  while (ch != EOF)
+    // {
     //    printf("%c", ch);
-     //   ch = getc(fileptr1);
-   // }
+    //   ch = getc(fileptr1);
+    // }
     //rewind
-    rewind(fileptr1); // go to the begining of the file pointer
+    rewind(fileptr1); // Go to the begining of the file pointer
     //printf(" \n Enter line number of the line to be deleted:");
     //scanf("%d", &delete_line);
     //open new file in write mode
     fileptr2 = fopen("replica.c", "w");
     ch = 'A';
-    while (fgets(line1,100000,fileptr1) != NULL)
+    while (fgets(line1,100000,fileptr1) != NULL) // get each line
     {
     
         //except the line to be deleted
         if (temp != delete_line)
         {
-            //copy all lines in file replica.c
-           // printf("%s", line1);
+            //copy all lines in file replica.c execpt the line to be deleted
+            // printf("%s", line1);
             fprintf(fileptr2 ,"%s", line1);
         }
         temp++;
     }
-    fclose(fileptr1);
+    fclose(fileptr1); // Close the file ptrs
     fclose(fileptr2);
-    remove(FileName);
+    remove(FileName); // Remove orignal file
     //rename the file replica.c to original name
-    rename("replica.c", FileName);
-    //printf("\n The contents of file after being modified are as follows:\n");
+    rename("replica.c", FileName); // Rename the file
     //fileptr1 = fopen(filename, "r");
     //ch = getc(fileptr1);
     //while (ch != EOF)
-   // {
-       // printf("%c", ch);
-   //   //  ch = getc(fileptr1);
+    // {
+    // printf("%c", ch);
+    // ch = getc(fileptr1);
     //}
-//fclose(fileptr1);
+    //fclose(fileptr1);
     return 0;
 }
-int CheckOS()
+int CheckOS() // Function to check the OS on which the program is running on.
 {  
-// C program to detect Operating System
-  
-  
-// Driver Code
-
 
   
+ 
 // Checking for windows OS with
 // _WIN32 macro
 #ifdef _WIN32
-    //printf("Hey Geek it seems that"
-           //"you are working on a Windows OS.\n");
            return 1;
   
 // Checking for mac OS with
 // __APPLE__ macro
-#elif __APPLE__
-   // printf("Hey Geek it seems that you"
-        //   "are working on a Mac OS.\n");
+#elif __APPLE__ 
            return 2;
   
 // Checking for linux OS with
 // __linux__ macro
-#elif __linux__
-    //printf("Hey Geek it seems that you"
-         //  "are working on a Linux OS.\n");
+#elif __linux__    
          return 3;
           
 // Checking for iOS embedded OS with
 // TARGET_OS_EMBEDDED macro
 #elif TARGET_OS_EMBEDDED
-    printf("Hey Geek it seems that you"
-           "are working on an iOS embedded OS.\n");
+    
   
 // Checking for iOS simulator OS with
 // TARGET_IPHONE_SIMULATOR macro
 #elif TARGET_IPHONE_SIMULATOR
-    printf("Hey Geek it seems that you"
-           "are working on an iOS simulator OS.\n");
+  
   
 // Checking for iPhone OS with
 // TARGET_OS_IPHONE macro
 #elif TARGET_OS_IPHONE
-    printf("Hey Geek it seems that you"
-           "are working on an iPhone OS.\n");
-  
+    
 // Checking for MAC OS with
 // TARGET_OS_MAC macro
 #elif TARGET_OS_MAC
-    printf("Hey Geek it seems that you"
-           "are working on a MAC OS.\n");
-  
+    
 // Checking for Android OS with
 // __ANDROID__ macro
 #elif__ANDROID__
-    printf("Hey Geek it seems that you"
-           "are working on an android OS.\n");
+   
   
 // Checking for unix OS with
 // __unix__ macro
 #elif __unix__
-    printf("Hey Geek it seems that you"
-           "are working on a unix OS.\n");
+  
   
 // Checking for POSIX based OS with
 // _POSIX_VERSION macro
 #elif _POSIX_VERSION
-    printf("Hey Geek it seems that you"
-           "are working on a POSIX based OS.\n");
+    
   
 // Checking for Solaris OS with
 // __sun macro
 #elif __sun
-    printf("Hey Geek it seems that you"
-           "are working on a Solaris OS.\n");
+   
   
 // Checking for HP UX OS with
 // __hpux macro
 #elif __hpux
-    printf("Hey Geek it seems that you"
-           "are working on a HP UX OS.\n");
+    
   
 // Checking for BSD OS with
 // BSD macro
 #elif BSD
-    printf("Hey Geek it seems that you"
-           "are working on a Solaris OS.\n");
+   
   
 // Checking for DragonFly BSD OS with
 // __DragonFly__ macro
 #elif __DragonFly__
-    printf("Hey Geek it seems that you"
-           "are working on a DragonFly BSD OS.\n");
-  
+   
 // Checking for FreeBSD OS with
 // __FreeBSD__ macro
 #elif __FreeBSD__
-    printf("Hey Geek it seems that you"
-           "are working on a FreeBSD OS.\n");
+    
   
 // Checking for Net BSD OS with
 // __NetBSD__ macro
 #elif __NetBSD__
-    printf("Hey Geek it seems that you"
-           "are working on a Net BSD OS.\n");
+   
   
 // Checking for Open BSD OS with
 // __OpenBSD__ macro
 #elif __OpenBSD__
-    printf("Hey Geek it seems that you"
-           "are working on an Open BSD OS.\n");
-  
+
 // If neither of them is present
 // then this is printed...
 #else
@@ -218,29 +189,28 @@ int CheckOS()
     return 0;
 
 }
-void OpenAndReadFile(char* Filename)
+void OpenAndReadFile(char* Filename) // Function to Open and read the contents of file.
 {
     FILE *fp = NULL;
 	char *line,*record;
 	char buffer[1024];
 	if ((fp = fopen( Filename, "at+")) != NULL)
 	{
-		char delims[] = ",";
+		char delims[] = ","; // deleimiter "," to read csv
 		char *result = NULL;
-		int j = 0;
+		int j = 0; // Count vars
         int i = 0 ; 
-		 while ((line = fgets(buffer, sizeof(buffer), fp))!=NULL)//The loop continues when the end of the file is not read
+		while ((line = fgets(buffer, sizeof(buffer), fp))!=NULL)//The loop continues when the end of the file is not read
 		{
             
-
 			record = strtok(line, ",");
 			 while (record != NULL)//Read the data of each row
 			{
-				 if (strcmp(record, "Ps:") == 0)//When reading the Ps line, do not continue reading
-					return 0;
-				 printf("%s ", record);//Print out every data read
-				 if (j == 25) //Just read the first 25 columns
-					break;
+				if (strcmp(record, "Ps:") == 0)//When reading the Ps line, do not continue reading
+				return 0;
+				printf("%s ", record);//Print out every data read
+				if (j == 30) //Just read the first 30 columns as our csv has only 30 lines mostly 
+				break;
 				record = strtok(NULL, ",");            
 				j++;
 			}
@@ -252,11 +222,11 @@ void OpenAndReadFile(char* Filename)
 		fp = NULL;
 	}
 }
-int DataPrint()
+int DataPrint() // Function to Print the Contents in a file 
 {
     
    FILE* fp = fopen("DataStore.csv", "a+");
-    if (fp == NULL)
+    if (fp == NULL) // Checking if the file exists.
     { 
         // Error in file opening
         printf("Can't open file\n");
