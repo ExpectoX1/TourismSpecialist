@@ -241,12 +241,13 @@ int DataPrint() // Function to Print the Contents in a file
     return 0;    
 
 } // Siddharth
+// code block to generate a random 4 digit number to be used as a password
 int GenrateRandomUniqueID()
 {
     
-    FILE *fp = fopen("ids.txt","a+");
+    FILE *fp = fopen("ids.txt","a+"); // a new text file is created and the numbers generated are stored in that
     int arr[7];
-    int lower = 1000, upper = 9999, count = 10;
+    int lower = 1000, upper = 9999, count = 10;// setting the limits for that no. generated
 
     srand(time(0));
 
@@ -264,7 +265,7 @@ int GenrateRandomUniqueID()
 
     int lower1 = 0, upper1 = 4, count1 = 1;
 
-    srand(time(0));
+    srand(time(0)); // waits for some system clicks so that the random no generated varies
 
   //  printf("The random numbers are: ");
     for (int i = 0; i < count1; i++) {
@@ -272,27 +273,30 @@ int GenrateRandomUniqueID()
         //printf("%d ", x);
         //printf("%d",arr[x]);s
         ID = arr[x];
-        fprintf(fp,"%d\n",arr[x]);
+        fprintf(fp,"%d\n",arr[x]);// prints the random valuein the file created
         printf("Your Unique ID is %d, Please remember it for future reference\n",ID);
     }
     return 0;
-} 
+}
+// to get a particular element from the csv file
 void GetElementsFromString()
 { 
     int i=0;
 
-    array[i] = strtok(Str,",");
+    array[i] = strtok(Str,","); // sets the delimiter as ',' since the file is in csv format
 
     while(array[i]!=NULL)
  {
-   array[++i] = strtok(NULL,",");
+   array[++i] = strtok(NULL,",");  //the next element will be the value/ string required
  }
     strcpy(PlaceChosen,array[1]);
     //printf("%s",array[1]);
     //printf("%s",PlaceChosen);
-    PricePerDayChosen = atoi(array[2]);
+    PricePerDayChosen = atoi(array[2]); // atoi converts a string to an int type 
     //printf("%d", PricePerDayChosen);
 }  
+// a sum function to get the total cost taking the price from the file and adding the additional costs based on the formula
+// continue from here
 void PriceCompute(int TravelCost)
 {
     int a  = 8377;
