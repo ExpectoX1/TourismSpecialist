@@ -19,7 +19,7 @@ char CustName[MAXLEN100];
 char PlaceChosen[MAXLEN1000];
 int PricePerDayChosen;
 int TotalPrice;
-int NoOfPpl;
+int NoOfPpl; // dffaig
 int NoOfDays;
 int Rooms; 
 int ID;
