@@ -9,6 +9,7 @@
 #define MAXLEN1000 1000
 #define MAXLEN100 100
 // Variables
+int found = 0 ;
 int LineChoose_t;
 char Str[1024];
 char *array[10];
@@ -29,8 +30,8 @@ int Age;
 int hours, minutes, seconds, day, month, year;
 int Day,Month,Year, MaxDay,t;
 
-
-void MangerPortal()  // Function to Open a file for the Admin or manager. 
+// Function to Open a file for the Admin or manager. 
+void MangerPortal()  
 {
     char str[1000];
     FILE *fp1 = fopen("DataStore.csv","a+"); // Open the file DataStore.csv and ManagerFile.txt
@@ -43,7 +44,8 @@ void MangerPortal()  // Function to Open a file for the Admin or manager.
     fclose(fp2);
     system("start ManagerFile.txt"); // open ManagerFile.txt
 }
-int DeleteEntry(char *FileName , int delete_line )  // Delete a Entry/Ticket from our Data File
+// Delete a Entry/Ticket from our Data File
+int DeleteEntry(char *FileName , int delete_line )  
 {
     FILE *fileptr1, *fileptr2; // File Pointers
     
@@ -95,7 +97,8 @@ int DeleteEntry(char *FileName , int delete_line )  // Delete a Entry/Ticket fro
     //fclose(fileptr1);
     return 0;
 }
-int CheckOS() // Function to check the OS on which the program is running on.
+// Function to check the OS on which the program is running on.
+int CheckOS() 
 {  
 
   
@@ -190,7 +193,8 @@ int CheckOS() // Function to check the OS on which the program is running on.
     return 0;
 
 }
-void OpenAndReadFile(char* Filename) // Function to Open and read the contents of file.
+// Function to Open and read the contents of file.
+void OpenAndReadFile(char* Filename)
 {
     FILE *fp = NULL;
 	char *line,*record;
@@ -223,7 +227,8 @@ void OpenAndReadFile(char* Filename) // Function to Open and read the contents o
 		fp = NULL;
 	}
 }
-int DataPrint() // Function to Print the Contents in a file 
+// Function to Print the Contents in a file 
+int DataPrint() 
 {
     
    FILE* fp = fopen("DataStore.csv", "a+");
@@ -240,7 +245,7 @@ int DataPrint() // Function to Print the Contents in a file
     fclose(fp);
     return 0;    
 
-} // Siddharth
+}
 // code block to generate a random 4 digit number to be used as a password
 int GenrateRandomUniqueID()
 {
@@ -310,6 +315,21 @@ void PriceCompute(int TravelCost)
     GenrateRandomUniqueID(); // calls the random number generator 
     
 }
+// a sum function to get the total cost taking the price from the file and adding the additional costs based on the formula
+void PriceComputePackage()
+{ // takes the input and computes the cost
+    int a  = 8377;
+    printf("Enter the Number Of People : ");
+    scanf("%d",&NoOfPpl);
+    printf("Enter the number of Days : ");
+    scanf("%d",&NoOfDays);
+    Rooms = ceil((float)NoOfPpl/4); // casting because ceil converts it to the integer greater than the given number. Comes under math.h
+   // printf("%d",PricePerDayChosen);
+    TotalPrice = ((PricePerDayChosen*NoOfPpl) + (NoOfDays*PricePerDayChosen)*Rooms);
+    printf("Your Total Booking amount is  : %ld Rs.\n",TotalPrice);
+    GenrateRandomUniqueID(); // calls the random number generator 
+    
+}
 // link between two functions
 void StoringString()
 {
@@ -325,7 +345,7 @@ int DestinationChoose()
     int yesno;
     int choose ; 
 
-    int NA = 90000; //Round Cost
+    int NA = 90000; //Round trip Cost
     int AS = 50000;
     int EU = 60000;
     int AU = 90000;
@@ -472,17 +492,18 @@ int DestinationChoose()
         
     
     }
-} //Shreyas S
+}
+// Printing User info out on the the terminal and storing it in DataStoreLine
 void LinePrint(char *FileName ,  int l)
 {
-	int count = 1;
+	int count = 1; // Counter Var for line number
 	FILE *fp1 = fopen(FileName, "r");
 	//fgets(line , 1000 , fp1);
 	
 	while(fgets(DataStoreLine , 1000 , fp1) != NULL)
 	{
 		
-		if(count == l)
+		if(count == l) // Checking line Number 
 		{
 			printf("%s \n",DataStoreLine); /// Printing the Person's Data out 
 			count =1;
@@ -490,15 +511,17 @@ void LinePrint(char *FileName ,  int l)
 		}
 		else
 		{
-			count = count +1;
+			count = count +1; // Incrementing Count
 		}
 	}
     fclose(fp1);
 
 }
+// Checking the ID entered by the user  
 void IDCheck()
 {
-     FILE *fp = NULL;
+    
+    FILE *fp = NULL;
 	char *line,*record;
 	char buffer[1024];
 	if ((fp = fopen( "ids.txt", "r")) != NULL)
@@ -513,10 +536,10 @@ void IDCheck()
 		 while ((line = fgets(buffer, sizeof(buffer), fp))!=NULL)//The loop continues when the end of the file is not read
 		{
             
-            strcpy(temp,strtok(buffer ," "));
+            strcpy(temp,strtok(buffer ," ")); // Getting ID out of the Data 
             //printf("%s",temp);
-            int a  = atoi(temp);
-           // printf("%d",a);
+            int a  = atoi(temp); // converting to integer 
+            // printf("%d",a);
             if(a == IDEnter)
             {
                // printf("reached here");
@@ -524,21 +547,27 @@ void IDCheck()
                // printf("%d",tracer);
                printf("We found A record using your Unique ID : \n");
                LinePrint("DataStore.csv",tracer);
+               found = 0;
                break;
             }
             else
             {
                 tracer++;
-               // printf("Not");
-                
+               // printf("No Data was found for the entered id")
             }
+            found = 1;
 
 		} 
+        if(found == 1)
+        {
+            printf("We could not find your Ticket");
+        }
 	    fclose(fp);
 		fp = NULL;
         
 	}
 }
+//Converting the PerLine to Strings 
 void ConvertLineToString(char *FLEN ,int lne)
 {
     char str[1024];
@@ -549,29 +578,33 @@ void ConvertLineToString(char *FLEN ,int lne)
         //printf("Failed to open file\n");
         //return -1;
     //}
-    for(end = loop = 0;loop<line+1;++loop){ 
-        if(0==fgets(str, sizeof(str), fd)){//include '\n'
+    for(end = loop = 0;loop<line+1;++loop)
+    { 
+        if(0==fgets(str, sizeof(str), fd))
+        {//include '\n'
             end = 1;//can't input (EOF)
             break;
         }
     }
     if(!end)
     {
-        strcpy(Str,str);
+        strcpy(Str,str);// copying the data
     }
     fclose(fd);
 }
+//Exit Function 
 void Exit()
 {
     exit(0);
 }
+// Menu Function 
 void menu()
 {   
-    int lineChoose ;
-    int yesno;
-    int choice;
-    int yn;
-    char Gen;
+    int lineChoose ; // line chosen by user 
+    int yesno; // Yes No var
+    int choice;//choice entered 
+    int yn; //Yn Var
+    char Gen;//Gender Var
     
     printf("\t \tHi, Welcome to the Booking System\n");
     printf("1. Book Custom Tickets\n");
@@ -597,7 +630,7 @@ void menu()
         scanf("%d", &Age);
         printf("Enter Your Gender (M/F/O) : ");
         scanf("%s",&Gen);
-        switch (Gen)
+        switch (Gen) // Checking Gender 
         {
         case 'M' :
             strcpy(Gender,"Male");
@@ -623,7 +656,7 @@ void menu()
             break;
         }
         
-        DestinationChoose();
+        DestinationChoose(); // Calling Functions
         DataPrint();
        
 
@@ -670,13 +703,13 @@ void menu()
             break;
         }
         
-        printf("Do you want to open the options in a Excel Document? \n");
+        printf("Do you want to open the options in a Excel Document? \n"); 
         printf("1. Yes\n");
         printf("2. No\n");
         scanf("%d",&yesno);
         if(yesno==1)//|| strcmp("y",yesno))
         {
-            system("start Package.xlsx");
+            system("start Package.xlsx"); // Open Excel Doc
         }
         else if(yesno==2)//|| strcmp("n",yesno))
         {
@@ -688,12 +721,12 @@ void menu()
             printf("Enter a Valid Option: \n");
             break;
         }
-        printf("\n  Enter the Place you want to travel to : ");
+        printf("\nEnter the Place you want to travel to : ");
         scanf("%d",&lineChoose);
         LineChoose_t = lineChoose;
         ConvertLineToString("Package.csv",LineChoose_t);
         StoringString();
-        PriceCompute(24000);
+        PriceComputePackage();
         
         DataPrint();
 
@@ -721,12 +754,15 @@ void menu()
           
          // DeleteEntry("DataStore.csv",tracer);
          // printf("%d",tracer);
+          if(found ==0)
+          {
           printf("Are You sure you want to delete the Booking 1.Yes 2.No \n");
           scanf("%d",&yn);
           if(yn == 1)
           {
           DeleteEntry("DataStore.csv",tracer);
           DeleteEntry("ids.txt",tracer);
+          }
           }
          // printf("deleted");
           break;
@@ -756,19 +792,11 @@ void menu()
     
     
    
-}//Shreyansh
+}
+// Main Function
 int main()
     {   
     menu();
     return 0;
     }
 
-// Instructions
-// What ever comments u make dont delete existing coments unless they bs 
-// try fixing the indentation if not proper
-// See if u can find a fix for the warnings
-// Make package csv we neeed atleat 30 entries so 10 each , try making your oen with reasonable prices
-// we need a discount funct its easy pls make im too bored to make :/
-// to make a discount func make generate a random number between 1 to 3 ,1 being 10% and 3 30% , just meke a func with price as the arg to do discount on ;
-// ill give 5 rs to the person who makes the function XD
-// format for the package csv is mostly the same as the other csv made earlier refer them  , its the package name (all place included keep them max 4)(Delhi->NYC->EUROPE->Africa), price - 

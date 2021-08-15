@@ -1,2 +1,31 @@
-Sr No,Name,PricePerday,Description,
-1,Montreal,11313,Canadian city known for Vieux-Montreal (old city) Notre-Dame Basilica & Montreal Botanical Garden.,
+SrNo,Places,Price Per Day,Description
+1,Delhi->NYC->London->Egypt->Delhi,156000,In this package we will vist places like India Gate - Times Square - London city and Nile River and Many more.
+2,Bangalore->Toronto->Germany->Bangalore,110000,In this package we travel to tronoto and Germany.
+3,Delhi->Houston->Spain->Delhi ,120200, In this package we will travell to NASA command Center and Spain.
+4,Bangalore->San Fransisco->Bejing->Bangalore,130500, In this Package we visit the beautiful San Frasisco and the lights of Beijing.
+5,Delhi->Queens->Singapore->Delhi,207100,This Package we will visit places like queens and the country Singapore.
+6,Bangalore->Paris->Grand Canyon->Bangalore,230700,This Package will take you to Eiffel tower and the Grand Canyon.
+7,Delhi->New Zealand->Colosseum(Rome),210800,This Package will take you to the beautiful New Zealand and Colosseum in Rome.
+8,Bangalore->Machu Picchu Peru->Great Barrier Reef,240320,This package will take you to Peru and Ausrialia and many more.
+9,Delhi->Bangalore->UP->Jammu Kashmir->Delhi ,123000,This packa will tale you on a tour of India.
+10,Bangalore->KanyaKumari->Gujrat->J&K->Assam->Bangalore,230000,The tour of North-South-East-West of India.
+11,Delhi->Singapore->Jakarta,110000,Visit two of the most popular cities of South East Asia 
+12,Delhi->Tokyo->Osaka->Hiroshima,125000,This package will take you to one of the most advanced and culturally rich in heritage country Japan
+13,Delhi->Adelaide->Melbourne->Brisbane,165000,A great offer to spend your holidays down under and visit top cities of Australia
+14,Delhi->Nairobi->CapeTown->Harare,142000,A unique package where you can spend your holidays in wildlife of Africa.
+15,Delhi->Rio de Janeiro->São Paulo->Brasília,151000,A visit to football land and also to witness the great The statue of Christ the Redeemer.
+16,Delhi->Bueno Aires->Mendoza,151000,The eighth largest country in the world. The glaciers and mountains of Patagonia are splendorous and the waterfalls in Iguazu are the biggest and most beautiful in the world.
+17,Delhi->Beijing->Chongqing->Wuhan->Guanghzau->Chengdu->Nanjing,110000,Visit china and witness its awesome heritage and culture.
+18,Delhi->Rome->Paris->London->Berlin,190000,The exotic places of Europe all covered in a single package. Visit to experience true beauty of Europe.
+19,Delhi->Toronto->Quebec->Montreal,187000,Visit Canada for its scenery ice-hockey Maple-Syrup and extremely polite citizens.
+20,Delhi->Auckland->Wellington->Christchurch,160000,Visit NewZealand and experience their culture and visit rugby and cricket stadiums.
+21,Bangalore->Mumbai->Kolkatta->Chennai->Bangalore,4400,Enjoy the travel through the metro cities with massive skyscrapers and bustling marketplaces.
+22,Kolkatta->Darjeeling->Gangtok->Pelling->Kolkatta,3300,Peaceful hill stations with exotic sceneries and chilling adventures to go on.
+23,Gangtok->Kalimpong->Darjeeling,5678,Calm hill stations and lots of tea plantations everywhere.
+24,Tirupati->Chennai->Madurai,3000,The rich culture and heritage of the south with glorious temples sure to give enriching experiences.
+25,Bhubaneswar->Puri,2986,Explore the heart of Odissha and its historical glory.
+26,Chennai->Pondicherry->Kodaikonal->Madurai,6500,Explore the entirity of Tamil nadu to its full extent.
+27,Bangalore->Goa,7800,Relaxing - free trip through goas mesmerizing beaches.
+28,Cochin->Munnar->Thekkady->Alleppey,8900,An exciting trip to see the best that kerala offers.
+29,Bangalore->Calicut->Trivandrum,7768,Round trip through kerala.
+30,Bangalore->Shimla->Mussourrie->Nainital->Corbett,12450,India s best hill stations with exotic natural scenery and horizons.
