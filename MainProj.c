@@ -33,7 +33,7 @@ int Day,Month,Year, MaxDay,t;
 // Discount Function for the final Discount on total price.
 void DiscountFunc(int totalp)
 {
-    if(Rooms >3)
+    if(Rooms >=3)
     {
         DiscountedPrice = totalp-(totalp*0.3);
         discountpercentage = 30;
