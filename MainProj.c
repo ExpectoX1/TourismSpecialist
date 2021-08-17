@@ -1,4 +1,3 @@
-//hello there
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -27,9 +26,30 @@ int Rooms;
 int ID;
 int tracer=1;
 int Age;
+int DiscountedPrice;
+int discountpercentage;
 int hours, minutes, seconds, day, month, year;
 int Day,Month,Year, MaxDay,t;
-
+// Discount Function for the final Discount on total price.
+void DiscountFunc(int totalp)
+{
+    if(Rooms >3)
+    {
+        DiscountedPrice = totalp-(totalp*0.3);
+        discountpercentage = 30;
+    }
+    else if(Rooms ==2)
+    {
+        DiscountedPrice = totalp-(totalp*0.2);
+        discountpercentage = 20;
+    }
+    else
+    {
+        DiscountedPrice = totalp-(totalp*0.1);
+        discountpercentage = 10;
+    }
+    
+}
 // Function to Open a file for the Admin or manager. 
 void MangerPortal()  
 {
@@ -214,7 +234,7 @@ void OpenAndReadFile(char* Filename)
 				if (strcmp(record, "Ps:") == 0)//When reading the Ps line, do not continue reading
 				return 0;
 				printf("%s ", record);//Print out every data read
-				if (j == 30) //Just read the first 30 columns as our csv has only 30 lines mostly 
+				if (j == 35) //Just read the first 35 columns as our csv has only 30 lines mostly 
 				break;
 				record = strtok(NULL, ",");            
 				j++;
@@ -228,7 +248,7 @@ void OpenAndReadFile(char* Filename)
 	}
 }
 // Function to Print the Contents in a file 
-int DataPrint() 
+int DataPrint() //3
 {
     
    FILE* fp = fopen("DataStore.csv", "a+");
@@ -239,7 +259,7 @@ int DataPrint()
         return 1;
     }
     // Saving data in file
-    fprintf(fp, "Unique ID : %d, Name : %s, Age : %d , Gender : %s, Place Chosen : %s, Price Per Day: %d, Number Of People : %d, Number Of Days Stay: %d, Rooms Booked : %d, Grand Total : %d Rs\n", ID,CustName,Age,Gender,PlaceChosen,PricePerDayChosen,NoOfPpl,NoOfDays,Rooms,TotalPrice);
+    fprintf(fp, "Unique ID : %d, Name : %s, Age : %d , Gender : %s, Place Chosen : %s, Price Per Day: %d, Number Of People : %d, Number Of Days Stay: %d, Rooms Booked : %d, Grand Total : %d Rs , Discounted Grand Price : %d Rs\n", ID,CustName,Age,Gender,PlaceChosen,PricePerDayChosen,NoOfPpl,NoOfDays,Rooms,TotalPrice,DiscountedPrice);
     printf("Ticket Booking Confirmed ! \n");
   
     fclose(fp);
@@ -303,15 +323,18 @@ void GetElementsFromString()
 // a sum function to get the total cost taking the price from the file and adding the additional costs based on the formula
 void PriceCompute(int TravelCost)
 { // takes the input and computes the cost
-    int a  = 8377;
+    // int a  = 8377;
     printf("Enter the Number Of People : ");
     scanf("%d",&NoOfPpl);
     printf("Enter the number of Days : ");
     scanf("%d",&NoOfDays);
     Rooms = ceil((float)NoOfPpl/4); // casting because ceil converts it to the integer greater than the given number. Comes under math.h
-   // printf("%d",PricePerDayChosen);
+    // printf("%d",PricePerDayChosen);
     TotalPrice = ((TravelCost*NoOfPpl) + (NoOfDays*PricePerDayChosen)*Rooms);
+    DiscountFunc(TotalPrice);
     printf("Your Total Booking amount is  : %ld Rs.\n",TotalPrice);
+    printf("Congratulations!! You got a Discount of  : %ld %c \n",discountpercentage,'%');
+    printf("Your Discounted Total Booking amount is  : %ld Rs.\n",DiscountedPrice);
     GenrateRandomUniqueID(); // calls the random number generator 
     
 }
@@ -326,7 +349,10 @@ void PriceComputePackage()
     Rooms = ceil((float)NoOfPpl/4); // casting because ceil converts it to the integer greater than the given number. Comes under math.h
    // printf("%d",PricePerDayChosen);
     TotalPrice = ((PricePerDayChosen*NoOfPpl) + (NoOfDays*PricePerDayChosen)*Rooms);
+    DiscountFunc(TotalPrice);
     printf("Your Total Booking amount is  : %ld Rs.\n",TotalPrice);
+    printf("Congratulations!! You got a Discount of  : %ld %c \n",discountpercentage,'%');
+    printf("Your Discounted Total Booking amount is  : %ld Rs.\n",DiscountedPrice);
     GenrateRandomUniqueID(); // calls the random number generator 
     
 }
@@ -339,7 +365,7 @@ void StoringString()
 
 }   
 // code block to take input from the user about the destination
-int DestinationChoose()
+int DestinationChoose()//2
 {
     int lineChoose ;
     int yesno;
@@ -368,15 +394,8 @@ int DestinationChoose()
         printf("Enter your choice : ");
         scanf("%d",&yesno);
         if(yesno==1)//|| strcmp("y",yesno))
-        {
-           if(CheckOS ==1)
-           {
-                system("start d1na.xlsx");
-           }
-           else if(CheckOS == 2)
-           {
-                system("libreoffice --calc d1na.xlsx"); // come here later
-           }
+        {    
+            system("start d1na.xlsx");
         }
         else if(yesno==2)//|| strcmp("n",yesno))
         {
@@ -598,7 +617,7 @@ void Exit()
     exit(0);
 }
 // Menu Function 
-void menu()
+void menu() //1 
 {   
     int lineChoose ; // line chosen by user 
     int yesno; // Yes No var
@@ -606,7 +625,7 @@ void menu()
     int yn; //Yn Var
     char Gen;//Gender Var
     
-    printf("\t \tHi, Welcome to the Booking System\n");
+    printf("\t \tHi, Welcome to the TOURISM SPECIALIST.\n");
     printf("1. Book Custom Tickets\n");
     printf("2. Book Package\n");
     printf("3. View Tickets\n");
@@ -764,7 +783,7 @@ void menu()
           DeleteEntry("ids.txt",tracer);
           }
           }
-         // printf("deleted");
+          printf("deleted");
           break;
         }
 
